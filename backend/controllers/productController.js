@@ -1,32 +1,32 @@
-// controllers/productController.js
-const Product = require('../models/productModel'); // Importe o modelo de Produto
+const Product = require('../models/productModel');
 
-// Função para cadastrar um novo produto
-exports.register = async (req, res) => {
+const register = async (req, res) => {
+    const { name, price } = req.body;
+
     try {
-        const { name, price, userId } = req.body;
-        if (!name || !price || !userId) {
-            return res.status(400).json({ message: 'Todos os campos são obrigatórios' });
-        }
+        const newProduct = await Product.create({
+            name,
+            price
+        });
 
-        const product = await Product.create({ name, price, userId });
-        res.status(201).json({ message: 'Produto cadastrado com sucesso!', product });
+        res.status(201).json(newProduct);
     } catch (error) {
-        console.error('Erro ao cadastrar produto:', error);
-        res.status(500).json({ message: 'Erro ao cadastrar produto', error: error.message });
+        console.error('Erro ao criar produto:', error);
+        res.status(500).json({ message: 'Erro ao criar produto' });
     }
 };
 
-// Função para listar todos os produtos
-exports.getAllProducts = async (req, res) => {
+const getAllProducts = async (req, res) => {
     try {
-        const products = await Product.findAll(); // Busca todos os produtos
-        if (!products || products.length === 0) {
-            return res.status(404).json({ message: 'Nenhum produto encontrado.' });
-        }
-        return res.status(200).json(products); // Retorna a lista de produtos
+        const products = await Product.findAll();
+        res.status(200).json(products);
     } catch (error) {
-        console.error('Erro ao buscar produtos:', error);
-        return res.status(500).json({ message: 'Erro ao buscar produtos' });
+        console.error('Erro ao listar produtos:', error);
+        res.status(500).json({ message: 'Erro ao listar produtos' });
     }
+};
+
+module.exports = {
+    register,
+    getAllProducts
 };

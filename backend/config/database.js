@@ -1,13 +1,14 @@
 const { Sequelize } = require('sequelize');
 
-// Configuração do Sequelize para usar SQLite
+
 const sequelize = new Sequelize({
     dialect: 'sqlite',
-    storage: 'database.sqlite', // O arquivo do banco de dados será criado aqui
+    storage: 'database.sqlite',
     logging: console.log,
 });
 
-// Sincroniza o banco de dados e cria as tabelas
+
+
 sequelize.sync({ force: true })
     .then(() => {
         console.log('Banco de Dados sincronizado com sucesso.');
@@ -15,5 +16,6 @@ sequelize.sync({ force: true })
     .catch((error) => {
         console.error('Erro ao sincronizar o banco de dados:', error);
     });
+
 
 module.exports = sequelize;

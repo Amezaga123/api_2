@@ -1,18 +1,22 @@
 const express = require('express');
-const cors = require('cors'); // Importe o middleware CORS
+const cors = require('cors'); 
 const userRoutes = require('./routes/userRoutes');
-const productRoutes = require('./routes/productRoutes'); // Importe as rotas de produto
+const productRoutes = require('./routes/productRoutes'); 
 const sequelize = require('./config/database');
+const saleRoutes = require('./routes/saleRoutes');
+
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+
 app.use(cors());
 app.use(express.json());
 app.use('/api/users', userRoutes);
-app.use('/api/products', productRoutes); // Adicione esta linha
+app.use('/api/products', productRoutes); 
+app.use('/api/sales', saleRoutes);
 
-// Sincroniza o banco de dados
+
 sequelize.sync()
     .then(() => {
         console.log('Banco de dados sincronizado com sucesso');
@@ -23,3 +27,5 @@ sequelize.sync()
     .catch(error => {
         console.error('Não foi possível conectar ao banco de dados:', error);
     });
+
+

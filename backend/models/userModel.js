@@ -1,5 +1,6 @@
 const { DataTypes } = require('sequelize');
-const sequelize = require('../config/database'); // Importe o sequelize
+const sequelize = require('../config/database');
+
 
 const User = sequelize.define('User', {
     nome: {
@@ -9,7 +10,7 @@ const User = sequelize.define('User', {
     email: {
         type: DataTypes.STRING,
         allowNull: false,
-        unique: true // Impede que emails duplicados sejam cadastrados
+        unique: true
     },
     cpf: {
         type: DataTypes.STRING,
@@ -21,4 +22,8 @@ const User = sequelize.define('User', {
     }
 });
 
+
 module.exports = User;
+
+
+
